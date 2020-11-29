@@ -9,8 +9,18 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        let people = ["John", "Paul", "George", "Ringo"]
+        
+        List {
+            Section(header: Text("Dynamic Data")) {
+                ForEach(people, id: \.self) {
+                    Text($0)
+                }
+            }
+            Section(header: Text("Static Data")) {
+                Text("And Bobby!")
+            }
+        }
     }
 }
 
