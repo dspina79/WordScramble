@@ -11,6 +11,7 @@
 		55C7257D2573F99D006E5C85 /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 55C7257C2573F99D006E5C85 /* ContentView.swift */; };
 		55C7257F2573F9A2006E5C85 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55C7257E2573F9A2006E5C85 /* Assets.xcassets */; };
 		55C725822573F9A2006E5C85 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 55C725812573F9A2006E5C85 /* Preview Assets.xcassets */; };
+		55C7258B2575D3D5006E5C85 /* start.txt in Resources */ = {isa = PBXBuildFile; fileRef = 55C7258A2575D3D5006E5C85 /* start.txt */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -20,6 +21,7 @@
 		55C7257E2573F9A2006E5C85 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		55C725812573F9A2006E5C85 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		55C725832573F9A2006E5C85 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		55C7258A2575D3D5006E5C85 /* start.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; name = start.txt; path = ../../../../../../Downloads/start.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -55,6 +57,7 @@
 				55C7257A2573F99D006E5C85 /* WordScambleApp.swift */,
 				55C7257C2573F99D006E5C85 /* ContentView.swift */,
 				55C7257E2573F9A2006E5C85 /* Assets.xcassets */,
+				55C7258A2575D3D5006E5C85 /* start.txt */,
 				55C725832573F9A2006E5C85 /* Info.plist */,
 				55C725802573F9A2006E5C85 /* Preview Content */,
 			);
@@ -127,6 +130,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				55C725822573F9A2006E5C85 /* Preview Assets.xcassets in Resources */,
+				55C7258B2575D3D5006E5C85 /* start.txt in Resources */,
 				55C7257F2573F9A2006E5C85 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
