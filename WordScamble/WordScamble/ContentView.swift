@@ -1,10 +1,3 @@
-//
-//  ContentView.swift
-//  WordScamble
-//
-//  Created by Dave Spina on 11/29/20.
-//
-
 import SwiftUI
 
 struct ContentView: View {
@@ -45,9 +38,9 @@ struct ContentView: View {
     func isReal(word: String) -> Bool {
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
-        let misspelledWords = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
+        let misspellings = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
         
-        return misspelledWords.location == NSNotFound
+        return misspellings.location == NSNotFound
     }
     
     func isPossible(word: String) -> Bool {
