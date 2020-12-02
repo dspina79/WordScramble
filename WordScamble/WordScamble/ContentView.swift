@@ -8,6 +8,7 @@ struct ContentView: View {
     @State private var errorTitle = ""
     @State private var errorMessage = ""
     @State private var showingError = false
+    @State private var currentScore: Double = 0.0;
     
     var body: some View {
         NavigationView {
@@ -24,10 +25,17 @@ struct ContentView: View {
                         Text($0)
                     }
                     .padding()
+                    Text("Score: \(currentScore, specifier: "%g")")
+                        .foregroundColor(.black)
+                        .font(/*@START_MENU_TOKEN@*/.title/*@END_MENU_TOKEN@*/)
+                        .fontWeight(.heavy)
                     Spacer()
                     
                 }.navigationBarTitle(rootWord)
                 .onAppear(perform: startGame)
+                .navigationBarItems(leading: Button("New Game"){
+                    startGame()
+                }.foregroundColor(.white))
                 .alert(isPresented: $showingError) {
                     Alert(title: Text(errorTitle), message: Text(errorMessage), dismissButton: .default(Text("Ok")))
                 }
@@ -36,6 +44,10 @@ struct ContentView: View {
     }
     
     func isReal(word: String) -> Bool {
+        guard word.count > 3 else {
+            return false
+        }
+        
         let checker = UITextChecker()
         let range = NSRange(location: 0, length: word.utf16.count)
         let misspellings = checker.rangeOfMisspelledWord(in: word, range: range, startingAt: 0, wrap: false, language: "en")
@@ -56,14 +68,16 @@ struct ContentView: View {
     }
     
     func isOriginal(word: String) -> Bool {
-        return !usedWords.contains(word)
+        return !usedWords.contains(word) && rootWord.lowercased() != word.lowercased()
     }
     
     func startGame() {
+        currentScore = 0.0
         if let wordsURL = Bundle.main.url(forResource: "start", withExtension: "txt") {
             if let startWords = try? String(contentsOf: wordsURL) {
                 let wordsArray = startWords.components(separatedBy: "\n")
                 rootWord = wordsArray.randomElement() ?? "balderdash"
+                self.usedWords = [String]()
                 return
             }
         }
@@ -86,7 +100,7 @@ struct ContentView: View {
         }
         
         guard isOriginal(word: answer) else {
-            wordError(title: "Not Original", message: "You've already specified that word.")
+            wordError(title: "Not Original", message: "You've already specified that word or it is the root word.")
             return
         }
         
@@ -96,12 +110,27 @@ struct ContentView: View {
         }
         
         guard isReal(word: answer) else {
-            wordError(title: "Misspelled", message: "The word you entered is not a real word.")
+            wordError(title: "Misspelled", message: "The word you entered is not a real word or it is too short.")
             return
         }
         
         usedWords.insert(answer, at: 0)
         newWord = ""
+        
+        setScore()
+    }
+    
+    func setScore() {
+        guard usedWords.count > 0 else {
+            currentScore = 0.0
+            return
+        }
+        var currentAmount = 0.0
+        for word in usedWords {
+            currentAmount += Double(word.count)
+        }
+        
+        currentScore = currentAmount / Double(usedWords.count)
     }
 }
 
