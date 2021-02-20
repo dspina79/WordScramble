@@ -25,6 +25,7 @@ struct ContentView: View {
                             Image(systemName: "\(word.count).circle")
                             Text(word)
                         }
+                        .offset(x: self.getWordIndex(word) > 5 ? CGFloat(self.getWordIndex(word) - 5) * 10 : 0, y: 0)
                         .accessibilityElement(children: .ignore)
                         .accessibility(label: Text("\(word), \(word.count) letters."))
                     }
@@ -45,6 +46,12 @@ struct ContentView: View {
                 }
             }
         }
+    }
+    
+    func getWordIndex(_ word: String) -> Int {
+        guard self.usedWords.contains(word) else { return 0 }
+        
+        return self.usedWords.firstIndex(of: word)!
     }
     
     func isReal(word: String) -> Bool {
