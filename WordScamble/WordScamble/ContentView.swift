@@ -1,6 +1,7 @@
 import SwiftUI
 
 struct ContentView: View {
+    let colors: [Color] = [.red, .green, .blue, .purple, .yellow]
     @State private var usedWords = [String]()
     @State private var rootWord = ""
     @State private var newWord = ""
@@ -16,19 +17,22 @@ struct ContentView: View {
                 LinearGradient(gradient: Gradient(colors: [.blue, .green, .yellow]), startPoint: .top, endPoint: .bottom)
                     .edgesIgnoringSafeArea(/*@START_MENU_TOKEN@*/.all/*@END_MENU_TOKEN@*/)
                 VStack {
-                    TextField("Enter your word", text: $newWord, onCommit: addNewWord)
-                        .textFieldStyle(RoundedBorderTextFieldStyle())
-                        .padding()
-                        .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
-                    List(usedWords, id: \.self) { word in
-                        HStack {
-                            Image(systemName: "\(word.count).circle")
-                            Text(word)
+                        TextField("Enter your word", text: $newWord, onCommit: addNewWord)
+                            .textFieldStyle(RoundedBorderTextFieldStyle())
+                            .padding()
+                            .autocapitalization(/*@START_MENU_TOKEN@*/.none/*@END_MENU_TOKEN@*/)
+                        List(usedWords, id: \.self) { word in
+                            GeometryReader { innerGeo  in
+                                HStack {
+                                    Image(systemName: "\(word.count).circle")
+                                    Text(word)
+                                }
+                                .foregroundColor(colors[(Int((abs(innerGeo.frame(in: .local).midY - innerGeo.frame(in: .global).minY)) / 2) + self.getWordIndex(word))  % 4])
+                                .offset(x: self.getWordIndex(word) > 5 ? CGFloat(self.getWordIndex(word) - 5) * 10 : 0, y: 0)
+                                .accessibilityElement(children: .ignore)
+                                .accessibility(label: Text("\(word), \(word.count) letters."))
+                            }
                         }
-                        .offset(x: self.getWordIndex(word) > 5 ? CGFloat(self.getWordIndex(word) - 5) * 10 : 0, y: 0)
-                        .accessibilityElement(children: .ignore)
-                        .accessibility(label: Text("\(word), \(word.count) letters."))
-                    }
                     .padding()
                     Text("Score: \(currentScore, specifier: "%g")")
                         .foregroundColor(.black)
@@ -55,6 +59,7 @@ struct ContentView: View {
     }
     
     func isReal(word: String) -> Bool {
+        return true
         guard word.count > 3 else {
             return false
         }
@@ -66,7 +71,9 @@ struct ContentView: View {
         return misspellings.location == NSNotFound
     }
     
+   
     func isPossible(word: String) -> Bool {
+        return true
         var tempWord = rootWord.lowercased()
         for letter in word {
             if let pos = tempWord.firstIndex(of:  letter) {
@@ -79,6 +86,7 @@ struct ContentView: View {
     }
     
     func isOriginal(word: String) -> Bool {
+        return true
         return !usedWords.contains(word) && rootWord.lowercased() != word.lowercased()
     }
     
